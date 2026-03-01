@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chess Master</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particles" id="particles"></div>
+        <div class="chess-pattern"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+    </div>
+
+    <div class="container">
+        <h1 class="game-title no-select">Chess Master</h1>
+        <div class="subtitle no-select">The Ultimate Chess Experience</div>
+
+        <!-- Login/Register Section -->
+        <div id="authSection" class="auth-container">
+            <!-- Login Box -->
+            <div class="glass-card auth-box">
+                <h2>⚔️ Login</h2>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username" autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" autocomplete="current-password">
+                </div>
+                <div id="loginError" class="error-message"></div>
+                <button class="btn-primary" onclick="login()">Enter Arena</button>
+            </div>
+
+            <!-- Register Box -->
+            <div class="glass-card auth-box">
+                <h2>🛡️ Register</h2>
+                
+                <div class="input-group">
+                    <label>Username *</label>
+                    <input type="text" id="regUsername" placeholder="3-20 chars, letters/numbers/_" 
+                           oninput="validateUsername(this.value)" autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label>Email *</label>
+                    <input type="email" id="regEmail" placeholder="Valid email required"
+                           oninput="validateEmail(this.value)" autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label>Password *</label>
+                    <input type="password" id="regPassword" placeholder="Min 8 chars, mixed case + number + symbol"
+                           oninput="checkPasswordStrength(this.value)" autocomplete="new-password">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="password-strength-text" id="strengthText"></div>
+                </div>
+
+                <div class="requirements">
+                    <div class="requirement-item" id="req-length">8+ chars</div>
+                    <div class="requirement-item" id="req-upper">Uppercase</div>
+                    <div class="requirement-item" id="req-lower">Lowercase</div>
+                    <div class="requirement-item" id="req-number">Number</div>
+                    <div class="requirement-item" id="req-special">Special</div>
+                    <div class="requirement-item" id="req-unique">Not username</div>
+                </div>
+
+                <div class="input-group" style="margin-top: 10px;">
+                    <label>Confirm Password *</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Re-enter password"
+                           oninput="validatePasswordMatch()" autocomplete="new-password">
+                </div>
+
+                <div id="regError" class="error-message"></div>
+                <div id="regSuccess" class="success-message"></div>
+                
+                <button class="btn-primary" id="registerBtn" onclick="register()" disabled>Join Ranks</button>
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div id="welcomeSection" class="welcome-section glass-card" style="display: none;">
+            <div class="welcome-text">Welcome, <span id="currentUserName" style="color: #ffd700;"></span>! 👑</div>
+            <div class="user-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="userWins">0</div>
+                    <div class="stat-label">Wins</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="userLosses">0</div>
+                    <div class="stat-label">Losses</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="userDraws">0</div>
+                    <div class="stat-label">Draws</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="userScore">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="enterGame()" style="width: auto; min-width: 150px;">Battle</button>
+                <button class="btn-secondary" onclick="logout()" style="width: auto; min-width: 150px;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="glass-card menu" id="mainMenu" style="display: none;">
+            <h2>Select Mode</h2>
+            <button class="mode-btn" onclick="showColorSelection()">1 Player vs Bot</button>
+            <button class="mode-btn" onclick="startTwoPlayer()">2 Players</button>
+            
+            <div class="color-selection" id="colorSelection">
+                <p style="text-align: center; margin-bottom: 10px; color: rgba(255,255,255,0.8); font-size: clamp(0.85rem, 2vw, 1rem);">Choose Side</p>
+                <button class="color-btn white-side" onclick="selectColor('white')">
+                    <span style="font-size: clamp(24px, 5vw, 40px);">♔</span>
+                    <div>
+                        <div style="font-size: clamp(0.9rem, 2vw, 1.2rem); font-weight: 700;">White</div>
+                        <div style="font-size: clamp(0.7rem, 1.5vw, 0.9rem); opacity: 0.7;">First</div>
+                    </div>
+                </button>
+                <button class="color-btn black-side" onclick="selectColor('black')">
+                    <span style="font-size: clamp(24px, 5vw, 40px);">♚</span>
+                    <div>
+                        <div style="font-size: clamp(0.9rem, 2vw, 1.2rem); font-weight: 700;">Black</div>
+                        <div style="font-size: clamp(0.7rem, 1.5vw, 0.9rem); opacity: 0.7;">Second</div>
+                    </div>
+                </button>
+                
+                <div class="difficulty-selector" id="difficultySelector">
+                    <p style="text-align: center; margin: 8px 0; color: #9370db; font-weight: 600; font-size: clamp(0.8rem, 2vw, 1rem);">Difficulty</p>
+                    <button class="difficulty-btn" onclick="startBotGame(2)">Easy</button>
+                    <button class="difficulty-btn" onclick="startBotGame(3)">Medium</button>
+                    <button class="difficulty-btn" onclick="startBotGame(4)">Hard</button>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="leaderboard" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <h2>🏆 Hall of Fame</h2>
+                <div id="leaderboardList" class="leaderboard-list">
+                    <div class="no-players">No warriors yet</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Container -->
+        <div class="chessboard-container" id="gameContainer">
+            <div class="status-message" id="statusMessage"></div>
+            
+            <div class="game-info">
+                <div class="turn-indicator" id="turnIndicator">White's Turn</div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div class="captured-pieces" id="capturedWhite"></div>
+                    <div class="captured-pieces" id="capturedBlack"></div>
+                </div>
+            </div>
+
+            <div class="chessboard" id="chessboard"></div>
+
+            <div class="controls">
+                <button class="control-btn" onclick="undoMove()">Undo</button>
+                <button class="control-btn" onclick="resetGame()">New</button>
+                <button class="control-btn" onclick="backToMenu()">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="promotion-modal" id="promotionModal">
+        <div class="promotion-content" id="promotionOptions"></div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

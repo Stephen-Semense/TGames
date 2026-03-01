@@ -1,0 +1,444 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+  padding: 20px;
+}
+
+#gameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Menu Button - At the TOP, outside game board, centered */
+#menuBtn {
+  padding: 10px 30px;
+  background: rgba(255, 0, 102, 0.2);
+  border: 2px solid #ff0066;
+  color: #ff0066;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(255, 0, 102, 0.3);
+  display: none;
+  order: -1; /* Puts it at the top */
+}
+
+#menuBtn:hover {
+  background: rgba(255, 0, 102, 0.4);
+  box-shadow: 0 0 25px rgba(255, 0, 102, 0.6);
+  transform: scale(1.05);
+}
+
+#gameContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+}
+
+#ui {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #00ffff;
+  font-size: 20px;
+  text-shadow: 0 0 10px #00ffff;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#highScore {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #ff00ff;
+  font-size: 16px;
+  text-shadow: 0 0 10px #ff00ff;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#gameOver {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  display: none;
+  z-index: 20;
+}
+
+#gameOver h2 {
+  font-size: 48px;
+  color: #ff0066;
+  text-shadow: 0 0 20px #ff0066;
+  margin-bottom: 20px;
+  animation: pulse 1s infinite;
+}
+
+#gameOver p {
+  font-size: 24px;
+  color: #00ffff;
+  margin-bottom: 30px;
+}
+
+#restartBtn {
+  padding: 15px 40px;
+  font-size: 20px;
+  background: transparent;
+  border: 2px solid #00ffff;
+  color: #00ffff;
+  cursor: pointer;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+#restartBtn:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+}
+
+#startScreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  z-index: 20;
+  width: 90%;
+}
+
+#startScreen h1 {
+  font-size: 56px;
+  background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  margin-bottom: 20px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+#startScreen p {
+  color: #888;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+#startBtn {
+  padding: 20px 50px;
+  font-size: 24px;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  border: none;
+  color: #000;
+  cursor: pointer;
+  border-radius: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  transition: transform 0.3s;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+#startBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 50px rgba(255, 0, 255, 0.6);
+}
+
+#countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  color: #00ffff;
+  text-shadow:
+    0 0 50px #00ffff,
+    0 0 100px #ff00ff;
+  display: none;
+  z-index: 25;
+  animation: countPulse 0.8s ease-out;
+}
+
+@keyframes countPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+#controls {
+  color: #00ffff;
+  font-size: 16px;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.control-hint {
+  display: inline-block;
+  margin: 0 8px;
+  padding: 5px 12px;
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+}
+
+#dpad {
+  width: 150px;
+  height: 150px;
+  display: none;
+  position: relative;
+}
+
+.dpad-btn {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.dpad-btn:active,
+.dpad-btn.active {
+  background: rgba(0, 255, 255, 0.4);
+  border-color: #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+  transform: scale(0.95);
+}
+
+.dpad-btn svg {
+  width: 30px;
+  height: 30px;
+  fill: #00ffff;
+  filter: drop-shadow(0 0 5px #00ffff);
+}
+
+.dpad-up {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px 10px 5px 5px;
+}
+
+.dpad-down {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px 5px 10px 10px;
+}
+
+.dpad-left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px 5px 5px 10px;
+}
+
+.dpad-right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 5px 10px 10px 5px;
+}
+
+.dpad-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 255, 255, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+  }
+  to {
+    filter: drop-shadow(0 0 40px rgba(255, 0, 255, 0.5));
+  }
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding: 10px;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+
+  #gameWrapper {
+    max-width: 100%;
+  }
+
+  #gameContainer {
+    max-width: 100%;
+  }
+
+  canvas {
+    max-height: 50vh;
+  }
+
+  #startScreen h1 {
+    font-size: 42px;
+  }
+
+  #gameOver h2 {
+    font-size: 36px;
+  }
+
+  #ui {
+    font-size: 16px;
+    top: 10px;
+    left: 10px;
+  }
+
+  #highScore {
+    font-size: 14px;
+    top: 10px;
+    right: 10px;
+  }
+
+  #menuBtn {
+    display: block;
+    padding: 8px 25px;
+    font-size: 12px;
+  }
+
+  #controls {
+    display: none !important;
+  }
+
+  #dpad {
+    display: block;
+  }
+
+  #countdown {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  #startScreen h1 {
+    font-size: 32px;
+  }
+
+  #startScreen p {
+    font-size: 14px;
+  }
+
+  #startBtn {
+    padding: 15px 40px;
+    font-size: 20px;
+  }
+
+  #gameOver h2 {
+    font-size: 28px;
+  }
+
+  #gameOver p {
+    font-size: 18px;
+  }
+
+  #dpad {
+    width: 120px;
+    height: 120px;
+  }
+
+  .dpad-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dpad-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dpad-center {
+    width: 30px;
+    height: 30px;
+  }
+
+  #menuBtn {
+    padding: 6px 20px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1025px) {
+  #dpad {
+    display: none !important;
+  }
+
+  #controls {
+    display: block !important;
+  }
+}

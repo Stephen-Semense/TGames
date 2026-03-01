@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TGames - Free Online Games</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="showSection('home')">T<span>Games</span></div>
+            
+            <ul class="nav-links desktop-nav">
+                <li><a onclick="showSection('home')" id="nav-home">Home</a></li>
+                <li><a onclick="showSection('new')" id="nav-new">New Games</a></li>
+                <li><a onclick="showSection('popular')" id="nav-popular">Popular</a></li>
+                <li><a onclick="showSection('categories')" id="nav-categories">Categories</a></li>
+            </ul>
+            
+            <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">T<span>Games</span></div>
+            <button class="close-menu-btn" onclick="toggleMobileMenu()" aria-label="Close Menu">
+                &times;
+            </button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a onclick="showSection('home')" id="mobile-nav-home">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a></li>
+            <li><a onclick="showSection('new')" id="mobile-nav-new">
+                <span class="nav-icon">🆕</span>
+                <span>New Games</span>
+            </a></li>
+            <li><a onclick="showSection('popular')" id="mobile-nav-popular">
+                <span class="nav-icon">🔥</span>
+                <span>Popular</span>
+            </a></li>
+            <li><a onclick="showSection('categories')" id="mobile-nav-categories">
+                <span class="nav-icon">📁</span>
+                <span>Categories</span>
+            </a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+            <p>© 2026 TGames</p>
+            <p class="footer-owners">Stephen Semense & Yojan Christ Barnes</p>
+        </div>
+    </div>
+    
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+
+    <section class="hero" id="home-hero">
+        <div class="hero-content">
+            <h1>Play Free Online Games</h1>
+            <p>Thousands of games at your fingertips. No downloads, no hassle!</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search games..." id="searchInput">
+            </div>
+        </div>
+    </section>
+
+    <div class="container" id="main-container">
+    </div>
+
+    <footer>
+        <div class="logo" onclick="showSection('home')">TGames</div>
+        <div class="footer-links">
+            <a onclick="openModal('about')">About Us</a>
+            <a onclick="openModal('privacy')">Privacy Policy</a>
+            <a onclick="openModal('terms')">Terms</a>
+            <a onclick="openModal('contact')">Contact</a>
+        </div>
+        <p class="copyright">&copy; 2026 TGames. All rights reserved.</p>
+        <p class="footer-owners">Founded by Stephen Semense & Yojan Christ Barnes</p>
+    </footer>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Title</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <div id="game-slots" style="display: none;">
+        
+        <a href="assets/games/Neon Snake/index.html" class="game-card new-game" data-category="arcade" data-title="Neon Snake" data-rating="4.5">
+            <div class="game-thumbnail">
+                <img src="assets/img/neonsnake.png" alt="Neon Snake">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Neon Snake</h3>
+                <div class="game-meta">
+                    <span class="game-category">Arcade</span>
+                    <span>⭐ 4.5</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="assets/games/Space Shooter/index.html" class="game-card popular-game" data-category="action" data-title="Space Shooter" data-rating="4.8">
+            <div class="game-thumbnail">
+                <img src="assets/img/spaceshooter.jpg" alt="Space Shooter">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Space Shooter</h3>
+                <div class="game-meta">
+                    <span class="game-category">Action</span>
+                    <span>⭐ 4.8</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="assets/games/Pac-Man/index.html" class="game-card" data-category="action" data-title="Pac-Man" data-rating="4.2">
+            <div class="game-thumbnail">
+                <img src="assets/img/pacman.jpg" alt="Pac-Man">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Pac-Man</h3>
+                <div class="game-meta">
+                    <span class="game-category">Action Maze</span>
+                    <span>⭐ 4.2</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="assets/games/Chain Reaction/index.html" class="game-card new-game popular-game" data-category="multiplayer" data-title="Chain Reaction" data-rating="4.6">
+            <div class="game-thumbnail">
+                <img src="assets/img/chainreaction.jpg" alt="Chain Reaction">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Chain Reaction</h3>
+                <div class="game-meta">
+                    <span class="game-category">Multiplayer</span>
+                    <span>⭐ 4.6</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="assets/games/Chess/index.html" class="game-card" data-category="strategy" data-title="Chess Master" data-rating="4.3">
+            <div class="game-thumbnail">
+                <img src="assets//img/chess.png" alt="Chess Master">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Chess Master</h3>
+                <div class="game-meta">
+                    <span class="game-category">Strategy</span>
+                    <span>⭐ 4.3</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="games/memory-match.html" class="game-card new-game" data-category="puzzle" data-title="Memory Match" data-rating="4.4">
+            <div class="game-thumbnail">
+                <img src="images/memory-match-thumb.jpg" alt="Memory Match">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Memory Match</h3>
+                <div class="game-meta">
+                    <span class="game-category">Puzzle</span>
+                    <span>⭐ 4.4</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="games/street-fighter.html" class="game-card popular-game" data-category="action" data-title="Street Fighter" data-rating="4.9">
+            <div class="game-thumbnail">
+                <img src="images/street-fighter-thumb.jpg" alt="Street Fighter">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Street Fighter</h3>
+                <div class="game-meta">
+                    <span class="game-category">Action</span>
+                    <span>⭐ 4.9</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="games/drift-king.html" class="game-card popular-game" data-category="racing" data-title="Drift King" data-rating="4.7">
+            <div class="game-thumbnail">
+                <img src="images/drift-king-thumb.jpg" alt="Drift King">
+                <div class="play-overlay"><span>Play Now</span></div>
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">Drift King</h3>
+                <div class="game-meta">
+                    <span class="game-category">Racing</span>
+                    <span>⭐ 4.7</span>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

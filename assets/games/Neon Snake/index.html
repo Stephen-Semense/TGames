@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Neon Snake</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div id="gameWrapper">
+      <button id="menuBtn">MENU</button>
+
+      <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="ui">
+          <div>SCORE: <span id="score">0</span></div>
+        </div>
+
+        <div id="highScore">HIGH: <span id="highScoreVal">0</span></div>
+
+        <div id="countdown">3</div>
+
+        <div id="startScreen">
+          <h1>NEON SNAKE</h1>
+          <p id="controlText">
+            Use WASD or Arrow Keys to Move<br />Wrap around the screen!
+          </p>
+          <button id="startBtn">START</button>
+        </div>
+
+        <div id="gameOver">
+          <h2>GAME OVER</h2>
+          <p>Score: <span id="finalScore">0</span></p>
+          <button id="restartBtn">Play Again</button>
+        </div>
+      </div>
+
+      <div id="controls">
+        <span class="control-hint">↑ UP</span>
+        <span class="control-hint">↓ DOWN</span>
+        <span class="control-hint">← LEFT</span>
+        <span class="control-hint">→ RIGHT</span>
+        <span class="control-hint">WRAP</span>
+      </div>
+
+      <div id="dpad">
+        <div class="dpad-btn dpad-up" data-dir="up">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 4l-8 8h16z" />
+          </svg>
+        </div>
+        <div class="dpad-btn dpad-down" data-dir="down">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20l8-8H4z" />
+          </svg>
+        </div>
+        <div class="dpad-btn dpad-left" data-dir="left">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 12l8-8v16z" />
+          </svg>
+        </div>
+        <div class="dpad-btn dpad-right" data-dir="right">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 12l-8-8v16z" />
+          </svg>
+        </div>
+        <div class="dpad-center"></div>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
