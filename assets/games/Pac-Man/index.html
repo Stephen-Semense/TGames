@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <title>PAC-MAN</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div id="landingPage">
+      <h1 class="game-title">PAC-MAN</h1>
+      <div class="difficulty-container">
+        <div class="difficulty-title">Select Difficulty</div>
+        <div class="difficulty-buttons">
+          <button class="diff-btn easy" onclick="selectDifficulty('easy')">
+            Easy
+          </button>
+          <button class="diff-btn normal" onclick="selectDifficulty('normal')">
+            Normal
+          </button>
+          <button class="diff-btn hard" onclick="selectDifficulty('hard')">
+            Hard
+          </button>
+        </div>
+      </div>
+      <button id="playBtn" class="play-btn" onclick="startGame()" disabled>
+        PLAY
+      </button>
+      <div class="controls-info">Use WASD or Arrow Keys to Move</div>
+      <div class="mobile-instructions">
+        Use the joystick below to move Pac-Man
+      </div>
+    </div>
+
+    <div id="gameContainer">
+      <div id="countdown">3</div>
+      <div id="score">SCORE: 0</div>
+      <div id="level-display">LEVEL: 1</div>
+      <canvas id="board"></canvas>
+      <div id="lives">LIVES: ❤️❤️❤️</div>
+      <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
+      <div id="joystick-container">
+        <div class="joystick-base">
+          <div class="joystick-arrow arrow-up"></div>
+          <div class="joystick-arrow arrow-down"></div>
+          <div class="joystick-arrow arrow-left"></div>
+          <div class="joystick-arrow arrow-right"></div>
+        </div>
+        <div class="joystick-stick" id="joystickStick"></div>
+      </div>
+    </div>
+
+    <div id="gameOverModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-title">GAME OVER</div>
+        <div class="final-score" id="finalScoreGameOver">SCORE: 0</div>
+        <div class="modal-buttons">
+          <button class="modal-btn retry-btn" onclick="retryGame()">
+            RETRY
+          </button>
+          <button class="modal-btn menu-btn" onclick="backToMenuFromModal()">
+            MENU
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="victoryModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-title">YOU WIN!</div>
+        <div class="final-score" id="finalScoreVictory">SCORE: 0</div>
+        <div class="modal-buttons">
+          <button class="modal-btn retry-btn" onclick="nextLevel()">
+            NEXT LEVEL
+          </button>
+          <button class="modal-btn menu-btn" onclick="backToMenuFromModal()">
+            MENU
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

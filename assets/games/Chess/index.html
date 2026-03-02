@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chess Master</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particles" id="particles"></div>
+        <div class="chess-pattern"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="grid-overlay"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="chess-logo">
+                <span class="logo-piece">♔</span>
+                <span class="logo-piece">♚</span>
+            </div>
+            <h1 class="game-title no-select">Chess Master</h1>
+            <div class="subtitle no-select">The Ultimate Battle of Minds</div>
+            <div class="title-underline"></div>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="glass-card menu" id="mainMenu">
+            <div class="menu-header">
+                <h2>Game Mode</h2>
+                <div class="mode-indicator" id="modeIndicator">Select a mode</div>
+            </div>
+            
+            <div class="mode-selection">
+                <button class="mode-btn" id="btnVsBot" onclick="selectMode('bot')">
+                    <span class="mode-icon">🤖</span>
+                    <div class="mode-info">
+                        <div class="mode-title">1 Player vs Bot</div>
+                        <div class="mode-desc">Challenge the AI</div>
+                    </div>
+                </button>
+                <button class="mode-btn" id="btnVsPlayer" onclick="selectMode('2player')">
+                    <span class="mode-icon">👥</span>
+                    <div class="mode-info">
+                        <div class="mode-title">2 Players</div>
+                        <div class="mode-desc">Play with a friend</div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="color-section" id="colorSection">
+                <div class="section-divider"></div>
+                <h3>Choose Your Side</h3>
+                <div class="color-selection">
+                    <button class="color-btn" id="btnWhite" onclick="selectColor('white')">
+                        <span class="color-icon">♔</span>
+                        <div class="color-info">
+                            <div class="color-name">White</div>
+                            <div class="color-desc">First Move</div>
+                        </div>
+                    </button>
+                    <button class="color-btn" id="btnBlack" onclick="selectColor('black')">
+                        <span class="color-icon">♚</span>
+                        <div class="color-info">
+                            <div class="color-name">Black</div>
+                            <div class="color-desc">Second Move</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="difficulty-section" id="difficultySection">
+                <div class="section-divider"></div>
+                <h3>Difficulty</h3>
+                <div class="difficulty-selection">
+                    <button class="difficulty-btn" id="btnEasy" onclick="selectDifficulty(2)">
+                        <span class="diff-stars">⭐</span>
+                        <span>Easy</span>
+                    </button>
+                    <button class="difficulty-btn" id="btnMedium" onclick="selectDifficulty(3)">
+                        <span class="diff-stars">⭐⭐</span>
+                        <span>Medium</span>
+                    </button>
+                    <button class="difficulty-btn" id="btnHard" onclick="selectDifficulty(4)">
+                        <span class="diff-stars">⭐⭐⭐</span>
+                        <span>Hard</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="start-section" id="startSection">
+                <div class="section-divider"></div>
+                <button class="btn-start" id="btnStart" onclick="startGame()" disabled>
+                    <span class="start-icon">⚔️</span>
+                    <span>Start Battle</span>
+                </button>
+                <div class="selection-summary" id="selectionSummary"></div>
+            </div>
+        </div>
+
+        <!-- Game Container -->
+        <div class="chessboard-container" id="gameContainer">
+            <div class="game-header">
+                <button class="btn-back" onclick="backToMenu()">← Menu</button>
+                <div class="game-mode-badge" id="gameModeBadge">VS Bot</div>
+            </div>
+            
+            <div class="status-message" id="statusMessage"></div>
+            
+            <div class="game-info">
+                <div class="turn-indicator" id="turnIndicator">White's Turn</div>
+                <div class="captured-container">
+                    <div class="captured-pieces" id="capturedWhite"></div>
+                    <div class="captured-divider"></div>
+                    <div class="captured-pieces" id="capturedBlack"></div>
+                </div>
+            </div>
+
+            <div class="chessboard" id="chessboard"></div>
+
+            <div class="controls">
+                <button class="control-btn" onclick="undoMove()">
+                    <span>↩️</span> Undo
+                </button>
+                <button class="control-btn btn-primary" onclick="resetGame()">
+                    <span>🔄</span> New
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="promotion-modal" id="promotionModal">
+        <div class="promotion-content" id="promotionOptions"></div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

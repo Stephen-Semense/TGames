@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #050505;
+  font-family: "Orbitron", sans-serif;
+  user-select: none;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  cursor: none;
+}
+
+.neon-text {
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #0ff,
+    0 0 30px #0ff,
+    0 0 40px #0ff;
+}
+
+.neon-text-gold {
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #ffd700,
+    0 0 30px #ffd700;
+}
+
+.neon-box {
+  box-shadow:
+    0 0 5px #0ff,
+    0 0 10px #0ff inset;
+  border: 1px solid #0ff;
+  background: rgba(0, 20, 40, 0.8);
+}
+
+.neon-btn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-btn:hover,
+.neon-btn:active {
+  background-color: #0ff;
+  color: #000;
+  box-shadow: 0 0 20px #0ff;
+  transform: scale(1.05);
+}
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.2)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 51;
+}
+
+.boss-warning {
+  animation: pulse-red 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-red {
+  from {
+    text-shadow: 0 0 10px #f00;
+  }
+  to {
+    text-shadow:
+      0 0 30px #f00,
+      0 0 50px #f00;
+  }
+}
+
+.powerup-indicator {
+  animation: pulse-powerup 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-powerup {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.elite-indicator {
+  animation: pulse-purple 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-purple {
+  from {
+    text-shadow: 0 0 5px #a855f7;
+  }
+  to {
+    text-shadow:
+      0 0 15px #a855f7,
+      0 0 25px #a855f7;
+  }
+}

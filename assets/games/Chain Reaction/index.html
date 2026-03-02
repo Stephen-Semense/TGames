@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Chain Reaction - Multiplayer Strategy Game</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>⚛️ Chain Reaction ⚛️</h1>
+
+      <div class="menu-screen" id="menuScreen">
+        <div class="menu-section">
+          <div class="section-title">Select Game Mode</div>
+          <div class="mode-buttons">
+            <button class="mode-btn active" onclick="selectMode('1vbot')">
+              👤 1 Player vs Bot
+            </button>
+            <button class="mode-btn" onclick="selectMode('pvp')">
+              👥 Multiplayer (2-8)
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-section" id="difficultySection">
+          <div class="section-title">Bot Difficulty</div>
+          <div class="difficulty-buttons">
+            <button class="difficulty-btn" onclick="selectDifficulty('easy')">
+              Easy
+            </button>
+            <button
+              class="difficulty-btn active"
+              onclick="selectDifficulty('normal')"
+            >
+              Normal
+            </button>
+            <button class="difficulty-btn" onclick="selectDifficulty('hard')">
+              Hard
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-section" id="playerCountSection" style="display: none">
+          <div class="section-title">Number of Players</div>
+          <div class="player-buttons">
+            <button class="player-btn" onclick="selectPlayers(2)">2</button>
+            <button class="player-btn" onclick="selectPlayers(3)">3</button>
+            <button class="player-btn" onclick="selectPlayers(4)">4</button>
+            <button class="player-btn" onclick="selectPlayers(5)">5</button>
+            <button class="player-btn" onclick="selectPlayers(6)">6</button>
+            <button class="player-btn" onclick="selectPlayers(7)">7</button>
+            <button class="player-btn" onclick="selectPlayers(8)">8</button>
+          </div>
+        </div>
+
+        <button
+          class="start-btn"
+          id="startBtn"
+          onclick="proceedToColorSelection()"
+          disabled
+        >
+          Continue
+        </button>
+      </div>
+
+      <div class="color-select-screen" id="colorSelectScreen">
+        <div class="section-title">Choose Your Colors</div>
+        <div
+          class="color-selection-container"
+          id="colorSelectionContainer"
+        ></div>
+        <button
+          class="continue-btn"
+          id="continueBtn"
+          onclick="startGame()"
+          disabled
+        >
+          Start Game
+        </button>
+        <button class="back-btn" onclick="backToMenu()">← Back</button>
+      </div>
+
+      <div class="game-screen" id="gameScreen">
+        <div class="game-header">
+          <div class="turn-indicator" id="turnIndicator">Player 1's Turn</div>
+          <div class="game-info">
+            <button class="reset-btn" onclick="resetGame()">🔄 Reset</button>
+            <button class="menu-return-btn" onclick="returnToMenu()">
+              📋 Menu
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-container" id="gridContainer"></div>
+
+        <div class="player-colors" id="playerColors"></div>
+      </div>
+
+      <div class="winner-modal" id="winnerModal">
+        <div class="winner-content">
+          <div class="winner-text" id="winnerText">Player 1 Wins!</div>
+          <div class="stats" id="winnerStats"></div>
+          <button
+            class="start-btn"
+            onclick="closeWinnerModal()"
+            style="margin-top: 30px"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

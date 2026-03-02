@@ -1,0 +1,624 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  text-align: center;
+  background-color: #111;
+  margin: 0;
+  padding: 20px;
+  font-family: "Courier New", monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#landingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  touch-action: auto;
+}
+
+.game-title {
+  font-size: 72px;
+  color: #ffff00;
+  text-shadow:
+    0 0 20px #ffff00,
+    0 0 40px #ffff00;
+  margin-bottom: 50px;
+  animation: pulse 2s infinite;
+  letter-spacing: 10px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.difficulty-container {
+  margin-bottom: 40px;
+}
+
+.difficulty-title {
+  color: white;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.diff-btn {
+  padding: 15px 40px;
+  font-size: 24px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  border: 3px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.diff-btn.easy {
+  color: #00ff00;
+  border-color: #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+.diff-btn.easy:hover,
+.diff-btn.easy.selected {
+  background: #00ff00;
+  color: black;
+  box-shadow: 0 0 30px #00ff00;
+}
+
+.diff-btn.normal {
+  color: #ffff00;
+  border-color: #ffff00;
+  box-shadow: 0 0 10px #ffff00;
+}
+.diff-btn.normal:hover,
+.diff-btn.normal.selected {
+  background: #ffff00;
+  color: black;
+  box-shadow: 0 0 30px #ffff00;
+}
+
+.diff-btn.hard {
+  color: #ff0000;
+  border-color: #ff0000;
+  box-shadow: 0 0 10px #ff0000;
+}
+.diff-btn.hard:hover,
+.diff-btn.hard.selected {
+  background: #ff0000;
+  color: black;
+  box-shadow: 0 0 30px #ff0000;
+}
+
+.play-btn {
+  padding: 20px 80px;
+  font-size: 36px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  background: linear-gradient(45deg, #2121de, #0000aa);
+  color: white;
+  border: 4px solid #2121de;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  box-shadow: 0 0 20px #2121de;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.play-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px #2121de;
+}
+.play-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#gameContainer {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  touch-action: none;
+}
+
+#countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  color: #ffff00;
+  text-shadow: 0 0 30px #ffff00;
+  z-index: 100;
+  display: none;
+}
+
+#board {
+  background-color: black;
+  border: 4px solid #2121de;
+  box-shadow: 0 0 20px #2121de;
+  touch-action: none;
+}
+
+#score {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+#level-display {
+  color: #00ffff;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+#lives {
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.controls-info {
+  color: #888;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.back-btn {
+  margin-top: 20px;
+  padding: 10px 30px;
+  font-size: 18px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-btn:hover {
+  background: white;
+  color: black;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  touch-action: auto;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 4px solid;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow:
+    0 0 50px,
+    0 0 100px;
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-title {
+  font-size: 48px;
+  text-shadow:
+    0 0 20px,
+    0 0 40px;
+  margin-bottom: 20px;
+  letter-spacing: 5px;
+  animation: flicker 1.5s infinite;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.final-score {
+  font-size: 28px;
+  color: #ffff00;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #ffff00;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  padding: 15px 40px;
+  font-size: 24px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  border: 3px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  border-radius: 10px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.retry-btn {
+  color: #00ff00;
+  border-color: #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+}
+.retry-btn:hover {
+  background: #00ff00;
+  color: black;
+  box-shadow: 0 0 30px #00ff00;
+  transform: scale(1.05);
+}
+
+.menu-btn {
+  color: #ffff00;
+  border-color: #ffff00;
+  box-shadow: 0 0 15px #ffff00;
+}
+.menu-btn:hover {
+  background: #ffff00;
+  color: black;
+  box-shadow: 0 0 30px #ffff00;
+  transform: scale(1.05);
+}
+
+#gameOverModal .modal-content {
+  border-color: #ff0000;
+  box-shadow:
+    0 0 50px rgba(255, 0, 0, 0.5),
+    0 0 100px rgba(255, 0, 0, 0.3);
+}
+#gameOverModal .modal-title {
+  color: #ff0000;
+  text-shadow:
+    0 0 20px #ff0000,
+    0 0 40px #ff0000;
+}
+
+#victoryModal .modal-content {
+  border-color: #00ff00;
+  box-shadow:
+    0 0 50px rgba(0, 255, 0, 0.5),
+    0 0 100px rgba(0, 255, 0, 0.3);
+}
+#victoryModal .modal-title {
+  color: #00ff00;
+  text-shadow:
+    0 0 20px #00ff00,
+    0 0 40px #00ff00;
+}
+
+#joystick-container {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  z-index: 50;
+  touch-action: none;
+}
+
+.joystick-base {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  backdrop-filter: blur(5px);
+}
+
+.joystick-stick {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ffff00 0%, #ffcc00 100%);
+  border: 3px solid #ff9900;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+  transition: none;
+}
+
+.joystick-stick.active {
+  background: radial-gradient(circle, #00ff00 0%, #00cc00 100%);
+  border-color: #009900;
+}
+
+.joystick-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  opacity: 0.3;
+}
+.arrow-up {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 15px 20px 15px;
+  border-color: transparent transparent white transparent;
+}
+.arrow-down {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 20px 15px 0 15px;
+  border-color: white transparent transparent transparent;
+}
+.arrow-left {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 15px 20px 15px 0;
+  border-color: transparent white transparent transparent;
+}
+.arrow-right {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 15px 0 15px 20px;
+  border-color: transparent transparent transparent white;
+}
+
+.mobile-instructions {
+  display: none;
+  color: #888;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+    overflow: hidden;
+  }
+  .game-title {
+    font-size: 48px;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+  }
+  .difficulty-container {
+    margin-bottom: 25px;
+  }
+  .difficulty-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  .difficulty-buttons {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .diff-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    min-width: 100px;
+  }
+  .play-btn {
+    padding: 16px 50px;
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+  #gameContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    justify-content: flex-start;
+    padding-top: 10px;
+  }
+  #score {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  #level-display {
+    font-size: 16px;
+  }
+  #lives {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .controls-info {
+    display: none;
+  }
+  .mobile-instructions {
+    display: block;
+  }
+  #joystick-container {
+    display: block;
+    bottom: 20px;
+  }
+  #board {
+    max-width: 95vw;
+    max-height: 50vh;
+    height: auto;
+    border-width: 2px;
+  }
+  #countdown {
+    font-size: 80px;
+  }
+  .back-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .modal-content {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  .modal-title {
+    font-size: 36px;
+  }
+  .final-score {
+    font-size: 22px;
+  }
+  .modal-btn {
+    padding: 12px 30px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .game-title {
+    font-size: 36px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+  .difficulty-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .difficulty-buttons {
+    gap: 10px;
+  }
+  .diff-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    min-width: 90px;
+    border-width: 2px;
+  }
+  .play-btn {
+    padding: 14px 40px;
+    font-size: 20px;
+    border-width: 3px;
+  }
+  #joystick-container {
+    width: 120px;
+    height: 120px;
+    bottom: 15px;
+  }
+  .joystick-base {
+    width: 120px;
+    height: 120px;
+  }
+  .joystick-stick {
+    width: 50px;
+    height: 50px;
+  }
+  .arrow-up {
+    top: 8px;
+    border-width: 0 12px 16px 12px;
+  }
+  .arrow-down {
+    bottom: 8px;
+    border-width: 16px 12px 0 12px;
+  }
+  .arrow-left {
+    left: 8px;
+    border-width: 12px 16px 12px 0;
+  }
+  .arrow-right {
+    right: 8px;
+    border-width: 12px 0 12px 16px;
+  }
+  #board {
+    max-height: 45vh;
+  }
+  #countdown {
+    font-size: 60px;
+  }
+  .modal-title {
+    font-size: 28px;
+  }
+  .final-score {
+    font-size: 18px;
+  }
+  .modal-btn {
+    padding: 10px 25px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .game-title {
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+  .diff-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    min-width: 80px;
+  }
+  .play-btn {
+    padding: 12px 30px;
+    font-size: 18px;
+  }
+  #joystick-container {
+    width: 100px;
+    height: 100px;
+    bottom: 10px;
+  }
+  .joystick-base {
+    width: 100px;
+    height: 100px;
+  }
+  .joystick-stick {
+    width: 40px;
+    height: 40px;
+  }
+}
