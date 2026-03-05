@@ -1,6 +1,8 @@
 // Particle System
 function createParticles() {
   const container = document.getElementById("particles");
+  if (!container) return;
+  
   const count = window.innerWidth < 768 ? 30 : 70;
   
   for (let i = 0; i < count; i++) {
@@ -23,7 +25,6 @@ function createParticles() {
     container.appendChild(particle);
   }
 }
-createParticles();
 
 // Game State
 const PIECES = {
@@ -51,16 +52,15 @@ let kingPositions = { w: [7, 4], b: [0, 4] };
 
 // Selection State
 let gameState = {
-  mode: null, // 'bot' or '2player'
-  color: null, // 'white' or 'black'
-  difficulty: null // 2, 3, 4
+  mode: null,
+  color: null,
+  difficulty: null
 };
 
 // Selection Functions
 function selectMode(mode) {
   gameState.mode = mode;
   
-  // Update UI
   document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('selected'));
   document.getElementById(mode === 'bot' ? 'btnVsBot' : 'btnVsPlayer').classList.add('selected');
   
@@ -68,15 +68,12 @@ function selectMode(mode) {
   indicator.textContent = mode === 'bot' ? 'VS Bot selected' : '2 Players selected';
   indicator.classList.add('active');
   
-  // Show color selection for both modes
   document.getElementById('colorSection').classList.add('show');
   
-  // If 2 player mode, auto-select white and show start
   if (mode === '2player') {
     selectColor('white');
     document.getElementById('difficultySection').style.display = 'none';
   } else {
-    // Bot mode - show difficulty after color
     document.getElementById('difficultySection').style.display = 'block';
     if (gameState.color) {
       document.getElementById('difficultySection').classList.add('show');
@@ -90,7 +87,6 @@ function selectColor(color) {
   gameState.color = color;
   playerColor = color === 'white' ? 'w' : 'b';
   
-  // Update UI
   document.querySelectorAll('.color-btn').forEach(btn => {
     btn.classList.remove('selected', 'white-side', 'black-side');
   });
@@ -98,12 +94,10 @@ function selectColor(color) {
   const btn = document.getElementById(color === 'white' ? 'btnWhite' : 'btnBlack');
   btn.classList.add('selected', color === 'white' ? 'white-side' : 'black-side');
   
-  // Show difficulty for bot mode
   if (gameState.mode === 'bot') {
     document.getElementById('difficultySection').classList.add('show');
   }
   
-  // Show start section
   document.getElementById('startSection').classList.add('show');
   
   updateStartButton();
@@ -114,7 +108,6 @@ function selectDifficulty(depth) {
   gameState.difficulty = depth;
   botDepth = depth;
   
-  // Update UI
   document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('selected'));
   const btnId = depth === 2 ? 'btnEasy' : depth === 3 ? 'btnMedium' : 'btnHard';
   document.getElementById(btnId).classList.add('selected');
@@ -163,14 +156,12 @@ function startGame() {
   document.getElementById('mainMenu').style.display = 'none';
   document.getElementById('gameContainer').style.display = 'flex';
   
-  // Update game mode badge
   const badge = document.getElementById('gameModeBadge');
   badge.textContent = isBotGame ? `VS Bot (${gameState.difficulty === 2 ? 'Easy' : gameState.difficulty === 3 ? 'Medium' : 'Hard'})` : '2 Players';
   
   initBoard();
   renderBoard();
   
-  // If playing as black against bot, bot moves first
   if (isBotGame && playerColor === 'b') {
     document.getElementById('statusMessage').textContent = "Bot is thinking...";
     document.getElementById('statusMessage').classList.add('thinking');
@@ -182,10 +173,6 @@ function startGame() {
 }
 
 // Board Functions
-function getBoardSize() {
-  return Math.min(window.innerWidth * 0.95, window.innerHeight * 0.85, 800);
-}
-
 function initBoard() {
   board = [
     ["br", "bn", "bb", "bq", "bk", "bb", "bn", "br"],
@@ -209,14 +196,14 @@ function initBoard() {
 
 function renderBoard() {
   const boardEl = document.getElementById("chessboard");
-  const size = getBoardSize();
-  const squareSize = size / 8;
-
-  boardEl.style.width = size + "px";
-  boardEl.style.height = size + "px";
-  boardEl.style.gridTemplateColumns = `repeat(8, ${squareSize}px)`;
-  boardEl.style.gridTemplateRows = `repeat(8, ${squareSize}px)`;
+  if (!boardEl) return;
+  
   boardEl.innerHTML = "";
+  
+  // Set explicit grid dimensions
+  boardEl.style.display = 'grid';
+  boardEl.style.gridTemplateColumns = `repeat(8, 1fr)`;
+  boardEl.style.gridTemplateRows = `repeat(8, 1fr)`;
 
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 8; col++) {
@@ -271,7 +258,6 @@ function renderBoard() {
         const pieceEl = document.createElement("span");
         pieceEl.className = `piece ${piece[0] === "w" ? "white" : "black"}`;
         pieceEl.textContent = PIECES[piece[0]][piece[1]];
-        pieceEl.style.fontSize = squareSize * 0.8 + "px";
 
         pieceEl.addEventListener("touchstart", (e) => {
           e.preventDefault();
@@ -371,7 +357,6 @@ function getValidMoves(row, col) {
           if (target && target[0] !== color) {
             moves.push([newRow, newCol]);
           }
-          // En passant
           if (lastMove?.piece[1] === "p" && 
               Math.abs(lastMove.from[0] - lastMove.to[0]) === 2 &&
               lastMove.to[0] === row && lastMove.to[1] === newCol) {
@@ -415,7 +400,6 @@ function getValidMoves(row, col) {
         addMove(row + dr, col + dc);
       });
 
-      // Castling
       if (!hasMoved(row, col) && !isInCheck(color)) {
         if (canCastle(row, col, 7)) moves.push([row, 6]);
         if (canCastle(row, col, 0)) moves.push([row, 2]);
@@ -423,7 +407,6 @@ function getValidMoves(row, col) {
       break;
   }
 
-  // Filter illegal moves
   return moves.filter((move) => {
     const testBoard = copyBoard(board);
     testBoard[move[0]][move[1]] = testBoard[row][col];
@@ -605,7 +588,6 @@ function executeMove(fromRow, fromCol, toRow, toCol, captured, enPassantCapture,
   updateDisplay();
   renderBoard();
 
-  // Check game end
   if (isCheckmate(currentPlayer)) {
     const winner = currentPlayer === "w" ? "Black" : "White";
     document.getElementById('statusMessage').innerHTML = 
@@ -622,7 +604,6 @@ function executeMove(fromRow, fromCol, toRow, toCol, captured, enPassantCapture,
     document.getElementById('statusMessage').textContent = "";
   }
 
-  // Bot move
   if (isBotGame && currentPlayer !== playerColor) {
     isThinking = true;
     document.getElementById('statusMessage').textContent = "Bot is thinking...";
@@ -651,7 +632,6 @@ function undoMove() {
   selectedPiece = null;
   validMoves = [];
 
-  // Recalculate captured pieces
   capturedPieces = { w: [], b: [] };
   moveHistory.forEach(move => {
     if (move.captured) {
@@ -794,7 +774,6 @@ function evaluateBoard() {
 
       let value = PIECE_VALUES[piece[1]];
 
-      // Position bonuses
       if (piece[1] === "p") {
         const advance = piece[0] === "w" ? 6 - row : row - 1;
         value += advance * 10;
@@ -829,7 +808,6 @@ function backToMenu() {
   document.getElementById('gameContainer').style.display = 'none';
   document.getElementById('mainMenu').style.display = 'flex';
   
-  // Reset selections
   gameState = { mode: null, color: null, difficulty: null };
   document.querySelectorAll('.mode-btn, .color-btn, .difficulty-btn').forEach(btn => {
     btn.classList.remove('selected', 'white-side', 'black-side');
@@ -866,12 +844,34 @@ window.addEventListener("orientationchange", () => {
     if (document.getElementById('gameContainer').style.display === 'flex') {
       renderBoard();
     }
-  }, 100);
+  }, 300);
+});
+
+// Initial setup
+document.addEventListener('DOMContentLoaded', () => {
+  createParticles();
 });
 
 document.getElementById('promotionModal').addEventListener('click', (e) => {
   if (e.target.id === 'promotionModal') {
     e.target.style.display = 'none';
     pendingPromotion = null;
+  }
+});
+
+// Prevent zoom on double tap for mobile
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, { passive: false });
+
+// Prevent context menu on long press for pieces
+document.addEventListener('contextmenu', (e) => {
+  if (e.target.classList.contains('piece')) {
+    e.preventDefault();
   }
 });
