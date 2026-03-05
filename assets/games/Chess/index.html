@@ -113,24 +113,30 @@
             
             <div class="status-message" id="statusMessage"></div>
             
-            <div class="game-info">
-                <div class="turn-indicator" id="turnIndicator">White's Turn</div>
-                <div class="captured-container">
-                    <div class="captured-pieces" id="capturedWhite"></div>
-                    <div class="captured-divider"></div>
-                    <div class="captured-pieces" id="capturedBlack"></div>
+            <!-- Side panel for landscape mode -->
+            <div class="side-panel" id="sidePanel">
+                <div class="game-info">
+                    <div class="turn-indicator" id="turnIndicator">White's Turn</div>
+                    <div class="captured-container">
+                        <div class="captured-pieces" id="capturedWhite"></div>
+                        <div class="captured-divider"></div>
+                        <div class="captured-pieces" id="capturedBlack"></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="control-btn" onclick="undoMove()">
+                        <span>↩️</span> Undo
+                    </button>
+                    <button class="control-btn btn-primary" onclick="resetGame()">
+                        <span>🔄</span> New
+                    </button>
                 </div>
             </div>
 
-            <div class="chessboard" id="chessboard"></div>
-
-            <div class="controls">
-                <button class="control-btn" onclick="undoMove()">
-                    <span>↩️</span> Undo
-                </button>
-                <button class="control-btn btn-primary" onclick="resetGame()">
-                    <span>🔄</span> New
-                </button>
+            <!-- Chessboard wrapper -->
+            <div class="chessboard-wrapper">
+                <div class="chessboard" id="chessboard"></div>
             </div>
         </div>
     </div>
