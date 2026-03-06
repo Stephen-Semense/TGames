@@ -1,207 +1,181 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Filipino Dama</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Dama - Filipino Game</title>
-  </head>
-  <body>
+</head>
+<body>
+    <!-- Landing Page -->
     <div class="landing-page" id="landingPage">
-      <div class="ornament ornament-1"></div>
-      <div class="ornament ornament-2"></div>
-      <div class="ornament ornament-3"></div>
-
-      <div class="landing-content">
-        <h1 class="game-title">FILIPINO DAMA</h1>
-        <p class="subtitle">Philippine Checkers</p>
-
-        <div class="mode-selection">
-          <button class="mode-btn" id="btnPvB" onclick="selectMode('pvb')">
-            <span class="mode-icon">🤖</span>
-            <span>Player vs Bot</span>
-          </button>
-          <button class="mode-btn" id="btnPvP" onclick="selectMode('pvp')">
-            <span class="mode-icon">👥</span>
-            <span>2 Players</span>
-          </button>
+        <div class="ornament ornament-1"></div>
+        <div class="ornament ornament-2"></div>
+        <div class="ornament ornament-3"></div>
+        
+        <div class="landing-content">
+            <h1 class="game-title">FILIPINO DAMA</h1>
+            <p class="subtitle">Philippine Checkers</p>
+            
+            <div class="mode-selection">
+                <button class="mode-btn" id="btnPvB" onclick="selectMode('pvb')">
+                    <span class="mode-icon">🤖</span>
+                    <span>Player vs Bot</span>
+                </button>
+                <button class="mode-btn" id="btnPvP" onclick="selectMode('pvp')">
+                    <span class="mode-icon">👥</span>
+                    <span>2 Players</span>
+                </button>
+            </div>
+            
+            <div class="color-selection" id="colorSelection">
+                <div class="color-title">Choose Your Color</div>
+                <div class="color-buttons">
+                    <button class="color-btn white" id="btnWhite" onclick="selectColor('white')" title="White (Moves First)">⚪</button>
+                    <button class="color-btn black" id="btnBlack" onclick="selectColor('black')" title="Black (Moves Second)">⚫</button>
+                </div>
+            </div>
+            
+            <div class="difficulty-selection" id="difficultySelection">
+                <div class="difficulty-title">Select Difficulty</div>
+                <div class="difficulty-buttons">
+                    <button class="diff-btn" onclick="selectDifficulty('easy')">Easy</button>
+                    <button class="diff-btn" onclick="selectDifficulty('medium')">Medium</button>
+                    <button class="diff-btn" onclick="selectDifficulty('hard')">Hard</button>
+                </div>
+            </div>
+            
+            <div class="rules-preview">
+                <h3>How to Play Filipino Dama</h3>
+                <ul>
+                    <li>Play on the 32 dark squares only (standard 8×8 board)</li>
+                    <li>12 pieces per player on first 3 rows</li>
+                    <li>Men move diagonally forward only (not sideways or back)</li>
+                    <li>Capture by jumping diagonally forward over opponent</li>
+                    <li>Capturing is mandatory - must take maximum pieces</li>
+                    <li>Reach the last row to promote to Dama (King)</li>
+                    <li>Dama moves any distance diagonally in all directions</li>
+                    <li>Dama captures by flying jump (any distance)</li>
+                    <li>Win by capturing all opponent pieces</li>
+                </ul>
+            </div>
+            
+            <button class="start-btn" id="startBtn" onclick="startGame()">Start Game</button>
         </div>
-
-        <div class="color-selection" id="colorSelection">
-          <div class="color-title">Choose Your Color</div>
-          <div class="color-buttons">
-            <button
-              class="color-btn white"
-              id="btnWhite"
-              onclick="selectColor('white')"
-              title="White (Moves First)"
-            >
-              ⚪
-            </button>
-            <button
-              class="color-btn black"
-              id="btnBlack"
-              onclick="selectColor('black')"
-              title="Black (Moves Second)"
-            >
-              ⚫
-            </button>
-          </div>
-        </div>
-
-        <div class="difficulty-selection" id="difficultySelection">
-          <div class="difficulty-title">Select Difficulty</div>
-          <div class="difficulty-buttons">
-            <button class="diff-btn" onclick="selectDifficulty('easy')">
-              Easy
-            </button>
-            <button class="diff-btn" onclick="selectDifficulty('medium')">
-              Medium
-            </button>
-            <button class="diff-btn" onclick="selectDifficulty('hard')">
-              Hard
-            </button>
-          </div>
-        </div>
-
-        <div class="rules-preview">
-          <h3>How to Play Filipino Dama</h3>
-          <ul>
-            <li>Play on the 32 dark squares only (standard 8×8 board)</li>
-            <li>12 pieces per player on first 3 rows</li>
-            <li>Men move diagonally forward only (not sideways or back)</li>
-            <li>Capture by jumping diagonally forward over opponent</li>
-            <li>Capturing is mandatory - must take maximum pieces</li>
-            <li>Reach the last row to promote to Dama (King)</li>
-            <li>Dama moves any distance diagonally in all directions</li>
-            <li>Dama captures by flying jump (any distance)</li>
-            <li>Win by capturing all opponent pieces</li>
-          </ul>
-        </div>
-
-        <button class="start-btn" id="startBtn" onclick="startGame()">
-          Start Game
-        </button>
-      </div>
     </div>
 
     <!-- Game Container -->
     <div class="game-container" id="gameContainer">
-      <div class="game-header">
-        <div class="player-info player-white" id="playerWhite">
-          <div class="player-piece"></div>
-          <span class="player-name" id="whiteName">White</span>
+        <div class="game-header">
+            <div class="game-header-top">
+                <div class="player-info player-white" id="playerWhite">
+                    <div class="player-piece"></div>
+                    <span class="player-name" id="whiteName">White</span>
+                </div>
+                
+                <div class="turn-indicator" id="turnIndicator">White's Turn</div>
+                
+                <div class="thinking-indicator" id="thinkingIndicator">
+                    <span>Bot thinking</span>
+                    <div class="thinking-dots">
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                    </div>
+                </div>
+                
+                <div class="player-info player-black" id="playerBlack">
+                    <div class="player-piece"></div>
+                    <span class="player-name" id="blackName">Black</span>
+                </div>
+            </div>
+            
+            <div class="game-header-bottom">
+                <div class="game-controls">
+                    <button class="control-btn" onclick="showMenuModal()">Menu</button>
+                    <button class="control-btn" onclick="resetGame()">New Game</button>
+                    <button class="control-btn" onclick="showRules()">Rules</button>
+                </div>
+            </div>
         </div>
-
-        <div class="turn-indicator" id="turnIndicator">White's Turn</div>
-
-        <div class="thinking-indicator" id="thinkingIndicator">
-          <span>Bot thinking</span>
-          <div class="thinking-dots">
-            <div class="thinking-dot"></div>
-            <div class="thinking-dot"></div>
-            <div class="thinking-dot"></div>
-          </div>
+        
+        <div class="board-container">
+            <div class="board" id="board"></div>
         </div>
-
-        <div class="player-info player-black" id="playerBlack">
-          <div class="player-piece"></div>
-          <span class="player-name" id="blackName">Black</span>
+        
+        <div class="game-status">
+            <div class="status-text" id="statusText">Game in progress...</div>
+            <div class="captured-pieces">
+                <div class="captured-count">
+                    <div class="mini-piece black"></div>
+                    <span id="capturedBlack">0</span>
+                </div>
+                <div class="captured-count">
+                    <div class="mini-piece white"></div>
+                    <span id="capturedWhite">0</span>
+                </div>
+            </div>
         </div>
-
-        <div class="game-controls">
-          <button class="control-btn" onclick="showMenuModal()">Menu</button>
-          <button class="control-btn" onclick="resetGame()">New Game</button>
-          <button class="control-btn" onclick="showRules()">Rules</button>
-        </div>
-      </div>
-
-      <div class="board-container">
-        <div class="board" id="board"></div>
-      </div>
-
-      <div class="game-status">
-        <div class="status-text" id="statusText">Game in progress...</div>
-        <div class="captured-pieces">
-          <div class="captured-count">
-            <div class="mini-piece black"></div>
-            <span id="capturedBlack">0</span>
-          </div>
-          <div class="captured-count">
-            <div class="mini-piece white"></div>
-            <span id="capturedWhite">0</span>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Game Over Modal -->
     <div class="modal" id="gameOverModal">
-      <div class="modal-content">
-        <h2 id="winnerText">White Wins!</h2>
-        <p id="winnerReason">by capturing all pieces</p>
-        <button class="modal-btn" onclick="resetGame()">Play Again</button>
-        <button class="modal-btn secondary" onclick="backToMenu()">
-          Main Menu
-        </button>
-      </div>
+        <div class="modal-content">
+            <h2 id="winnerText">White Wins!</h2>
+            <p id="winnerReason">by capturing all pieces</p>
+            <button class="modal-btn" onclick="resetGame()">Play Again</button>
+            <button class="modal-btn secondary" onclick="backToMenu()">Main Menu</button>
+        </div>
     </div>
 
     <!-- Menu Modal -->
     <div class="modal" id="menuModal">
-      <div class="modal-content">
-        <h2>Game Menu</h2>
-        <p>What would you like to do?</p>
-        <button class="modal-btn" onclick="resumeGame()">Resume Game</button>
-        <button class="modal-btn" onclick="resetGame()">New Game</button>
-        <button class="modal-btn secondary" onclick="backToMenu()">
-          Exit to Menu
-        </button>
-      </div>
+        <div class="modal-content">
+            <h2>Game Menu</h2>
+            <p>What would you like to do?</p>
+            <button class="modal-btn" onclick="resumeGame()">Resume Game</button>
+            <button class="modal-btn" onclick="resetGame()">New Game</button>
+            <button class="modal-btn secondary" onclick="backToMenu()">Exit to Menu</button>
+        </div>
     </div>
 
     <!-- Rules Modal -->
     <div class="modal" id="rulesModal">
-      <div class="modal-content">
-        <h2>Filipino Dama Rules</h2>
-        <div class="rules-content">
-          <p>
-            <strong>Board:</strong> 8×8 checkerboard, using only 32 dark
-            squares. Each player has 12 pieces on their first 3 rows.
-          </p>
-
-          <p><strong>Movement (Men):</strong></p>
-          <ul>
-            <li>Move diagonally forward only (toward opponent)</li>
-            <li>One square at a time to empty dark squares</li>
-            <li>Cannot move backward or sideways</li>
-          </ul>
-
-          <p><strong>Capturing:</strong></p>
-          <ul>
-            <li>Jump over adjacent opponent piece diagonally forward</li>
-            <li>Land on empty square immediately after</li>
-            <li>Capturing is mandatory</li>
-            <li>Must capture maximum number of pieces available</li>
-            <li>Multiple captures allowed with direction changes</li>
-          </ul>
-
-          <p><strong>Dama (King):</strong></p>
-          <ul>
-            <li>Promoted when reaching the last row (end of turn)</li>
-            <li>Moves any distance diagonally in all directions</li>
-            <li>Captures by "flying jump" - can jump from any distance</li>
-            <li>Must stop on square immediately after captured piece</li>
-          </ul>
-
-          <p>
-            <strong>Winning:</strong> Capture all opponent pieces or block all
-            moves.
-          </p>
+        <div class="modal-content">
+            <h2>Filipino Dama Rules</h2>
+            <div class="rules-content">
+                <p><strong>Board:</strong> 8×8 checkerboard, using only 32 dark squares. Each player has 12 pieces on their first 3 rows.</p>
+                
+                <p><strong>Movement (Men):</strong></p>
+                <ul>
+                    <li>Move diagonally forward only (toward opponent)</li>
+                    <li>One square at a time to empty dark squares</li>
+                    <li>Cannot move backward or sideways</li>
+                </ul>
+                
+                <p><strong>Capturing:</strong></p>
+                <ul>
+                    <li>Jump over adjacent opponent piece diagonally forward</li>
+                    <li>Land on empty square immediately after</li>
+                    <li>Capturing is mandatory</li>
+                    <li>Must capture maximum number of pieces available</li>
+                    <li>Multiple captures allowed with direction changes</li>
+                </ul>
+                
+                <p><strong>Dama (King):</strong></p>
+                <ul>
+                    <li>Promoted when reaching the last row (end of turn)</li>
+                    <li>Moves any distance diagonally in all directions</li>
+                    <li>Captures by "flying jump" - can jump from any distance</li>
+                    <li>Must stop on square immediately after captured piece</li>
+                </ul>
+                
+                <p><strong>Winning:</strong> Capture all opponent pieces or block all moves.</p>
+            </div>
+            <button class="modal-btn" onclick="closeRules()">Close</button>
         </div>
-        <button class="modal-btn" onclick="closeRules()">Close</button>
-      </div>
     </div>
+
     <script src="assets/js/main.js"></script>
-  </body>
+</body>
 </html>
